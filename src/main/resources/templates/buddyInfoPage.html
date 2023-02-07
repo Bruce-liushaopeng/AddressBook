@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Buddy Infos</title>
+</head>
+<body>
+      <table th:each="info: ${buddyInfos}">
+        <tr>
+            <td th:text="${info.getId()}"/>
+            <td th:text="${info.getName()}"/>
+            <td th:text="${info.getAddress()}"/>
+        </tr>
+      </table>
+</body>
+</html>
