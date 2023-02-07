@@ -18,6 +18,10 @@ public class AddressBook {
         return buddyList;
     }
 
+    public int getId() {
+        return this.id;
+    }
+
     public void setBuddyList(List<BuddyInfo> buddyList) {
         this.buddyList = buddyList;
     }
