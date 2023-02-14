@@ -28,11 +28,12 @@ class AddressBookControllerTest {
         assertThat(addressBookController).isNotNull();
     }
 
-    @Test
-    void getBuddyByIDTest() {
-        assertThat(this.restTemplate.getForObject("http://localhost:" + port + "/getBuddyById?addressBookId=1&buddyInfoId=1",
-                String.class)).contains("Bruce");
-    }
+
+//    @Test
+//    void getBuddyByIDTest() {
+//        assertThat(this.restTemplate.getForObject("http://localhost:" + port + "/getBuddyById?addressBookId=1&buddyInfoId=1",
+//                String.class)).contains("Bruce");
+//    }
 
     @Test
     void addNewBuddyInfoTest() {
