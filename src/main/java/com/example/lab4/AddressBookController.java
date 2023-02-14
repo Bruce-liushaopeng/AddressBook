@@ -57,12 +57,12 @@ public class AddressBookController {
         return "buddyInfoPage";
     }
 
-    @PostMapping(value="/addBuddyInfoToAddressBook",consumes = {"application/json"})
-    public String addBuddyInfo( @RequestParam(value="id", defaultValue = "1") String id, @RequestBody BuddyInfo newInfo, Model model) {
+    @PostMapping(value="/addBuddyInfoToAddressBook")
+    public String addBuddyInfo(@ModelAttribute("buddyInfoTemp") BuddyInfoTempObj buddyInfoTempObj, Model model) {
         List<AddressBook> books = new ArrayList<>();
         repo.findAll().forEach(books::add);
-        AddressBook book = books.get(Integer.parseInt(id) - 1);
-        book.addBuddyInfo(newInfo);
+        AddressBook book = books.get(Integer.parseInt(buddyInfoTempObj.getAddressbookID()) - 1);
+        book.addBuddyInfo(new BuddyInfo(buddyInfoTempObj.getName(), buddyInfoTempObj.getAddress()));
         List<BuddyInfo> buddyInfos = book.getBuddyList();
         repo.save(book);
         model.addAttribute("buddyInfos", buddyInfos);
@@ -103,5 +103,11 @@ public class AddressBookController {
     public String getBuddyInfoForm(Model model) {
         model.addAttribute("idObj", new IdObj());
         return "viewBuddyInfoForm";
+    }
+
+    @GetMapping(value="/addBuddyInfoForm")
+    public String addBuddyInfoForm(Model model) {
+        model.addAttribute("buddyInfoTemp", new BuddyInfoTempObj());
+        return "addBuddyInfoForm";
     }
 }
