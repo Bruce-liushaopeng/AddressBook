@@ -15,8 +15,9 @@ public class AddressBookController {
     @Autowired
     private AddressBookRepository repo;
     @GetMapping("/getAllBuddyFromAddressBookById")
-    public String getAllBuddyFromAddressBookById(@RequestParam(value="id", defaultValue = "1") String id, Model model) {
-        Optional<AddressBook> bookOptional = repo.findById(Long.parseLong(id));
+    public String getAllBuddyFromAddressBookById(@ModelAttribute("idObj") IdObj idObj, Model model) {
+        System.out.println(idObj.getAddressBookId());
+        Optional<AddressBook> bookOptional = repo.findById(idObj.getAddressBookId());
         AddressBook book = bookOptional.get();
         List<BuddyInfo> buddyInfos = book.getBuddyList();
         model.addAttribute("buddyInfos", buddyInfos);
@@ -24,15 +25,12 @@ public class AddressBookController {
     }
 
     @GetMapping("/getBuddyById")
-    public String getBuddyByID(
-            @RequestParam(value="addressBookId", defaultValue = "0") String addressBookId,
-            @RequestParam(value="buddyInfoId", defaultValue = "0") String buddyInfoId,
-            Model model) {
-        Optional<AddressBook> bookOptional = repo.findById(Long.parseLong(addressBookId));
+    public String getBuddyByID(@ModelAttribute("idObj") IdObj idObj, Model model) {
+        Optional<AddressBook> bookOptional = repo.findById(idObj.getAddressBookId());
         AddressBook book = bookOptional.get();
         List<BuddyInfo> buddyInfos = book.getBuddyList();
         BuddyInfo requestedBuddyInfo = buddyInfos.stream()
-                .filter(info -> info.getId().equals(Long.parseLong(buddyInfoId)))
+                .filter(info -> info.getId().equals(idObj.getBuddyInfoId()))
                 .findAny()
                 .orElse(null);
         model.addAttribute("buddyInfos", requestedBuddyInfo);
@@ -88,5 +86,22 @@ public class AddressBookController {
         repo.deleteById(Long.parseLong(id));
         model.addAttribute("id", id);
         return "deleteAddressBookSuccess";
+    }
+
+    @GetMapping(value="/")
+    public String homePage() {
+        return "home";
+    }
+
+    @GetMapping(value="/viewAllBuddyInfoInAddressBookForm")
+    public String getAddressBookIdForm(Model model) {
+        model.addAttribute("idObj", new IdObj());
+        return "viewAllBuddyInfoInAddressBookForm";
+    }
+
+    @GetMapping(value="/viewBuddyInfoForm")
+    public String getBuddyInfoForm(Model model) {
+        model.addAttribute("idObj", new IdObj());
+        return "viewBuddyInfoForm";
     }
 }

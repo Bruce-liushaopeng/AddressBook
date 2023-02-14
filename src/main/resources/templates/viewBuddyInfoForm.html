@@ -1,0 +1,15 @@
+<!DOCTYPE HTML>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+    <title>Address Book ID</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<h1>Input Address Book ID to view all the buddy infos</h1>
+<form action="#" th:action="@{/getBuddyById}" th:object="${idObj}" method="get">
+    <p>AddressBook ID: <input type="text" th:value="1" th:field="*{addressBookId}" /></p>
+    <p>BuddyInfo ID: <input type="text" th:value="1" th:field="*{buddyInfoId}" /></p>
+    <p><input type="submit" value="Submit" /> </p>
+</form>
+</body>
+</html>
