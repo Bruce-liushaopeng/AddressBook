@@ -26,16 +26,6 @@ public class AddressBookController {
         return "buddyInfoPage";
     }
 
-    @GetMapping("/spaGetAllBuddyFromAddressBookById")
-    public String spaGetAllBuddyFromAddressBookById(@ModelAttribute("idObj") IdObj idObj, Model model) {
-        System.out.println(idObj.getAddressBookId());
-        Optional<AddressBook> bookOptional = repo.findById(idObj.getAddressBookId());
-        AddressBook book = bookOptional.get();
-        List<BuddyInfo> buddyInfos = book.getBuddyList();
-        model.addAttribute("buddyInfos", buddyInfos);
-        return "buddyInfoPage";
-    }
-
     @GetMapping("/getBuddyById")
     public String getBuddyByID(@ModelAttribute("idObj") IdObj idObj, Model model) {
         Optional<AddressBook> bookOptional = repo.findById(idObj.getAddressBookId());

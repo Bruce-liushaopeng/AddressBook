@@ -8,8 +8,15 @@
     </script>
 </head>
 <body>
-<p>The first paragraph is selected.</p>
-<p>The second paragraph is selected.</p>
-<p>The third paragraph is selected.</p>
+
+<p class="addressbook-id"></p>
+<p class="addressbook-contents"></p>
+<h1>Create Buddy </h1>
+<form action="#" th:action="@{/addBuddyInfoToAddressBook}" th:object="${buddyInfoTemp}" method="post">
+    <p>AddressBook ID: <input type="text" th:value="1" th:field="*{addressbookID}" /></p>
+    <p>Name: <input type="text" th:value="1" th:field="*{name}" /></p>
+    <p>Address: <input type="text" th:value="1" th:field="*{address}" /></p>
+    <p><input type="submit" value="Submit" /> </p>
+</form>
 </body>
 </html>
