@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,8 +15,19 @@ public class AddressBookController {
 
     @Autowired
     private AddressBookRepository repo;
+    private final Gson Gson = new Gson();
     @GetMapping("/getAllBuddyFromAddressBookById")
     public String getAllBuddyFromAddressBookById(@ModelAttribute("idObj") IdObj idObj, Model model) {
+        System.out.println(idObj.getAddressBookId());
+        Optional<AddressBook> bookOptional = repo.findById(idObj.getAddressBookId());
+        AddressBook book = bookOptional.get();
+        List<BuddyInfo> buddyInfos = book.getBuddyList();
+        model.addAttribute("buddyInfos", buddyInfos);
+        return "buddyInfoPage";
+    }
+
+    @GetMapping("/spaGetAllBuddyFromAddressBookById")
+    public String spaGetAllBuddyFromAddressBookById(@ModelAttribute("idObj") IdObj idObj, Model model) {
         System.out.println(idObj.getAddressBookId());
         Optional<AddressBook> bookOptional = repo.findById(idObj.getAddressBookId());
         AddressBook book = bookOptional.get();
