@@ -8,8 +8,9 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import com.google.gson.Gson;
 
-@Controller
+@RestController
 public class AddressBookController {
 
     @Autowired
@@ -19,8 +20,9 @@ public class AddressBookController {
         Optional<AddressBook> bookOptional = repo.findById(Long.parseLong(id));
         AddressBook book = bookOptional.get();
         List<BuddyInfo> buddyInfos = book.getBuddyList();
+        String res = new Gson().toJson(buddyInfos);
         model.addAttribute("buddyInfos", buddyInfos);
-        return "buddyInfoPage";
+        return res;
     }
 
     @GetMapping("/getBuddyById")
@@ -36,7 +38,8 @@ public class AddressBookController {
                 .findAny()
                 .orElse(null);
         model.addAttribute("buddyInfos", requestedBuddyInfo);
-        return "buddyInfoPage";
+        String res = new Gson().toJson(requestedBuddyInfo);
+        return res;
     }
 
     @DeleteMapping("/deleteBuddyById")
